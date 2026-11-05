@@ -10,14 +10,13 @@ export const PRICE_RANGES = {
 export type ProductType = keyof typeof PRICE_RANGES;
 
 const SEED = [
-  { slug: "java-bedrock", type: "account", name: "Java+Bedrock Starter", description: "Full-access Java&Bedrock Edition account. Change email, skin and username.", priceCents: 999, stock: 2500, image: "/img/account-java.webp", badge: "Popular" },
-  { slug: "java-bedrock-random", type: "account", name: "Java + Bedrock Random Cape", description: "Both editions on one Microsoft account. Play on PC, console and mobile. Random cape included.", priceCents: 1399, stock: 150, image: "/img/account-bedrock.webp", badge: "Best value" },
-  { slug: "og-premium", type: "account", name: "Custom Cape Premium Account", description: "Rare OG-name account with migration done and multiple capes unlocked.", priceCents: 4999, stock: 5, image: "/img/account-premium.webp", badge: "Rare" },
-  { slug: "copper-cape", type: "cape", name: "COPPER CAPE", description: "Copper pattern. Delivered as a redeem code.", priceCents: 99, stock: 50, image: "/img/copper-cape.webp", badge: "" },
-  { slug: "home-cape", type: "cape", name: "HOME CAPE", description: "Home Cape weave. Delivered as a redeem code.", priceCents: 199, stock: 20, image: "/img/home-cape.webp", badge: "New" },
-  { slug: "menace-cape", type: "cape", name: "MENACE CAPE", description: "Menace Cape with nether portal look like. Delivered as a redeem code.", priceCents: 199, stock: 10, image: "/img/menace-cape.webp", badge: "" },
-  { slug: "builder-cape", type: "cape", name: "BUILDER CAPE", description: "Builder Cape with custom design. Delivered as a redeem code.", priceCents: 199, stock: 10, image: "/img/builder-cape.webp", badge: "New" },
-  { slug: "aurora-cape", type: "cape", name: "AURORA CAPE", description: "Aurora borealis pattern. Delivered as a redeem code.", priceCents: 99, stock: 10, image: "/img/aurora-cape.webp", badge: "New" },
+  { slug: "java-starter", type: "account", name: "Java & Bedrock Starter", description: "Full-access Java&Bedrock Edition account. Change email, skin and username.", priceCents: 999, stock: 25, image: "/img/account-java.webp", badge: "Popular" },
+  { slug: "java-bedrock-bundle", type: "account", name: "Java + Bedrock Random", description: "Both editions on one Microsoft account. Play on PC, console and mobile. Random Cape", priceCents: 1999, stock: 15, image: "/img/account-bedrock.webp", badge: "Best value" },
+  { slug: "og-premium", type: "account", name: "OG Premium", description: "Rare OG-name account with migration done and multiple capes unlocked.", priceCents: 4999, stock: 5, image: "/img/account-premium.webp", badge: "Rare" },
+  { slug: "ember-cape", type: "cape", name: "Copper Cape", description: "Copper Cape pattern. Delivered as a redeem code.", priceCents: 99, stock: 100, image: "/img/cape-ember.webp", badge: "" },
+  { slug: "frost-cape", type: "cape", name: "Home Cape", description: "Home Cape pattern. Delivered as a redeem code.", priceCents: 299, stock: 60, image: "/img/cape-frost.webp", badge: "New" },
+  { slug: "ender-cape", type: "cape", name: "Menace Cape", description: "Menace Cape pattern. Delivered as a redeem code.", priceCents: 599, stock: 30, image: "/img/cape-ender.webp", badge: "" },
+  { slug: "golden-cape", type: "cape", name: "Aurora Cape", description: "Aurora Cape pattern. Delivered as a redeem code.", priceCents: 999, stock: 10, image: "/img/cape-gold.webp", badge: "Limited" },
 ] as const;
 
 let seeded = false;
