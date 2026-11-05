@@ -65,7 +65,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.025em; }
 }
 .topbar-inner { max-width: 1180px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; gap: 16px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: -0.03em; }
-.brand-logo { border-radius: 9px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+.brand-logo { border-radius: 50%; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
 .seg { margin: 0 auto; display: flex; gap: 2px; padding: 3px; background: var(--bg3); border-radius: 12px; }
 .seg-item { position: relative; padding: 6px 16px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted); transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; gap: 6px; align-items: center; }
 .seg-item:hover { color: var(--text); }

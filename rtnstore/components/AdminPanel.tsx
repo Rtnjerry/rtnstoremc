@@ -4,15 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth, SignInButton } from "@clerk/nextjs";
-import { Boxes, PlusCircle, Ticket, Receipt, Minus, Plus, Pencil, Trash2, ChevronLeft, Copy } from "lucide-react";
+import { Boxes, PlusCircle, Ticket, Receipt, Minus, Plus, Pencil, Trash2, ChevronLeft, Copy, ShieldCheck } from "lucide-react";
 import { useStore } from "./Providers";
 import { useIsAdmin } from "./useIsAdmin";
 import { useProducts, type ProductDTO } from "./useProducts";
 import { ProductCard } from "./ProductGrid";
 import { money } from "@/lib/format";
 
-type Tab = "inventory" | "add" | "codes" | "orders";
-const IMAGES = ["/img/account-java.webp", "/img/account-bedrock.webp", "/img/account-premium.webp", "/img/cape-ember.webp", "/img/cape-frost.webp", "/img/cape-ender.webp", "/img/cape-gold.webp", "/img/hero.webp"];
+type Tab = "inventory" | "add" | "codes" | "orders" | "admins";
+const IMAGES = ["/img/account-java.webp", "/img/account-bedrock.webp", "/img/account-semiog.webp", "/img/account-hypixel.webp", "/img/account-veteran.webp", "/img/account-premium.webp", "/img/cape-copper.webp", "/img/cape-home.webp", "/img/cape-menace.webp", "/img/cape-builder.webp", "/img/cape-aurora.webp", "/img/cape-ember.webp", "/img/cape-frost.webp", "/img/cape-ender.webp", "/img/cape-gold.webp", "/img/hero.webp"];
 
 async function api(url: string, method: string, body?: unknown) {
   const r = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
@@ -74,6 +74,7 @@ function Dashboard() {
     { id: "add", label: "Add Item", icon: PlusCircle, color: "#34c759" },
     { id: "codes", label: "Redeem Codes", icon: Ticket, color: "#ff2d55" },
     { id: "orders", label: "Orders", icon: Receipt, color: "#ff9500" },
+    { id: "admins", label: "Admins", icon: ShieldCheck, color: "#af52de" },
   ];
   const totals = {
     stock: products?.reduce((s, p) => s + p.stock, 0) ?? 0,
@@ -113,8 +114,10 @@ function Dashboard() {
           <Editor onDone={() => { setTab("inventory"); refresh(); }} />
         ) : tab === "codes" ? (
           <Codes products={products} />
-        ) : (
+        ) : tab === "orders" ? (
           <Orders />
+        ) : (
+          <Admins />
         )}
       </section>
     </div>
@@ -360,6 +363,118 @@ function Orders() {
         ))}
         {orders?.length === 0 && <div className="row muted">No orders yet</div>}
         {!orders && <div className="row muted">Loading…</div>}
+      </div>
+    </>
+  );
+}
+
+type AdminDTO = { id: number; email: string; addedBy: string; createdAt: string };
+
+function Admins() {
+  const [admins, setAdmins] = useState<AdminDTO[] | null>(null);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { toast, sfx } = useStore();
+
+  const load = useCallback(() => {
+    api("/api/admin/admins", "GET")
+      .then(setAdmins)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    load();
+    const t = setInterval(load, 3000);
+    return () => clearInterval(t);
+  }, [load]);
+
+  const addAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const target = email.trim().toLowerCase();
+    if (!target) return;
+    setLoading(true);
+    try {
+      await api("/api/admin/admins", "POST", { email: target });
+      sfx("success");
+      toast("Admin added in real-time");
+      setEmail("");
+      load();
+    } catch (err) {
+      sfx("error");
+      toast((err as Error).message, "err");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeAdmin = async (adm: AdminDTO) => {
+    if (!confirm("Revoke admin access for " + adm.email + "?")) return;
+    try {
+      await api("/api/admin/admins?id=" + adm.id + "&email=" + encodeURIComponent(adm.email), "DELETE");
+      sfx("pop");
+      toast("Admin removed");
+      load();
+    } catch (err) {
+      sfx("error");
+      toast((err as Error).message, "err");
+    }
+  };
+
+  return (
+    <>
+      <div className="main-head">
+        <h2>Admin Management</h2>
+        <span className="muted small live-dot">Real-time active</span>
+      </div>
+
+      <form onSubmit={addAdmin} className="group form-group">
+        <label className="row">
+          <span className="row-title">New Admin Email</span>
+          <input
+            className="field-inline"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="admin@example.com"
+          />
+        </label>
+        <div className="row">
+          <button className="btn btn-primary btn-sm" disabled={loading || !email.trim()}>
+            {loading ? "Adding…" : "Add Admin"}
+          </button>
+        </div>
+      </form>
+
+      <div className="group">
+        {admins?.map((a) => {
+          const isSystem = a.id === -1 || a.addedBy === "system";
+          return (
+            <div className="row" key={a.email}>
+              <div className="cart-info">
+                <div className="row-title mono">{a.email}</div>
+                <div className="row-sub">
+                  {isSystem ? "Default admin · " : ("Added by " + a.addedBy + " · ")}
+                  {a.createdAt ? new Date(a.createdAt).toLocaleDateString() : "Active"}
+                </div>
+              </div>
+              {isSystem ? (
+                <span className="badge">Default</span>
+              ) : (
+                <button
+                  className="icon-btn"
+                  aria-label="Remove admin"
+                  onClick={() => removeAdmin(a)}
+                  title="Revoke admin access"
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
+            </div>
+          );
+        })}
+        {admins?.length === 0 && <div className="row muted">No admins configured</div>}
+        {!admins && <div className="row muted">Loading admins…</div>}
       </div>
     </>
   );

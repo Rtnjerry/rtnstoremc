@@ -36,5 +36,13 @@ export const redeemCodes = pgTable("redeem_codes", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const admins = pgTable("admins", {
+  id: serial().primaryKey(),
+  email: text().notNull().unique(),
+  addedBy: text("added_by").notNull().default("system"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export type Product = typeof products.$inferSelect;
 export type Order = typeof orders.$inferSelect;
+export type Admin = typeof admins.$inferSelect;

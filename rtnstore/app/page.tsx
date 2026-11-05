@@ -67,7 +67,7 @@ export default function Home() {
             See all <ArrowRight size={16} />
           </Link>
         </div>
-        <ProductGrid type="cape" limit={3} />
+        <ProductGrid type="cape" limit={5} />
       </section>
     </>
   );

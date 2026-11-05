@@ -10,7 +10,7 @@ export default function CapesPage() {
       <header className="large-title">
         <span className="eyebrow">Cosmetics</span>
         <h1>Capes</h1>
-        <p className="muted">Capes from $0.99 to $9.99. Every cape is delivered and redeemable by code.</p>
+        <p className="muted">Capes from $0.99 to $1.99. Every cape is delivered and redeemable by code.</p>
       </header>
       <RedeemBox />
       <ProductGrid type="cape" />

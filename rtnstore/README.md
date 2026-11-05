@@ -1,13 +1,13 @@
 # RTNStore
 
-A Minecraft-themed store for accounts ($9.99–$49.99) and capes ($0.99–$9.99, all redeemable by code), with an iOS-style UI, Clerk authentication, a live admin panel and Telegram checkout to **@rtnstores**.
+A Minecraft-themed store for accounts ($9.99–$49.99) and capes ($0.99–$1.99, all redeemable by code), with an iOS-style UI, Clerk authentication, a live admin panel and Telegram checkout to **@rtnstores**.
 
 ## Features
 - **Pages:** Home, Accounts, Capes (with a code redemption box), Cart, Admin (opened from the Settings button), Sign in / Sign up.
 - **Settings button on every page:** an iOS-style sheet with sound effects toggle, light/dark/system appearance, Telegram support, sign in/out and (for admins) the Admin Panel.
 - **Live stock:** storefront polls every few seconds; the admin panel every 3 seconds.
 - **Checkout:** stock is reserved in a database transaction (rejected if insufficient), an order with a unique payment ID (`RTN-…`) is saved, and Telegram opens with a prefilled message to @rtnstores containing the items, total and payment ID.
-- **Admin panel:** add/edit/delete items with live preview, adjust stock up/down, hide items, create redeem codes for capes, and update order status. Access is limited to the emails in `ADMIN_EMAILS`, checked server-side.
+- **Admin panel:** add/edit/delete items with live preview, adjust stock up/down, hide items, create redeem codes for capes, update order status, and add/remove admins with real-time access. Default admins: `domauff757@gmail.com`, `rtnjerry27@gmail.com`, `rathanakny2006@gmail.com`.
 - **UX:** iOS-like grouped lists, frosted glass bars, mobile tab bar, smooth scroll (Lenis), synthesized tap/pop/success sounds (Web Audio, no files).
 
 ## Tech
@@ -26,7 +26,7 @@ netlify dev --port 8889
 1. Import the repo in Vercel (framework preset: Next.js; build command `next build`).
 2. Create a Postgres database (Neon, Supabase, Vercel Postgres, etc.) and add its connection string as `NETLIFY_DB_URL`.
 3. Create the tables by running the SQL in `netlify/database/migrations/*/migration.sql` against that database once (e.g. `psql "$NETLIFY_DB_URL" -f netlify/database/migrations/<folder>/migration.sql`).
-4. Add the Clerk keys and `ADMIN_EMAILS`. Products are seeded automatically on the first request.
+4. Add the Clerk keys and `ADMIN_EMAILS`. Products and admins are seeded automatically on the first request.
 
 ## Custom domain with Cloudflare DNS
 1. Add your domain to Cloudflare and switch the registrar's nameservers to Cloudflare's.

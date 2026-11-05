@@ -4,7 +4,7 @@ Read PLAN.md first; continue at the first unchecked milestone.
 
 - Framework: Next.js 16 App Router (`app/`). Middleware file must be `proxy.ts` (Next 16). `auth()` is async; wrap Clerk `<Show>` in server components with `<Suspense>`. ClerkProvider goes inside `<body>`.
 - Database: Netlify Database with `drizzle-orm@beta` / `drizzle-kit@beta`. Schema in `db/schema.ts`, client in `db/index.ts` (`drizzle` from `drizzle-orm/netlify-db`), migrations output to `netlify/database/migrations` via `drizzle.config.ts`. Never apply migrations manually.
-- Admin access: emails listed in `ADMIN_EMAILS` env var; check server-side on every admin API.
+- Admin access: real-time admins in DB `admins` table + default admin list (domauff757@gmail.com, rtnjerry27@gmail.com, rathanakny2006@gmail.com) + `ADMIN_EMAILS` env var; check server-side via `requireAdmin()` on every admin API.
 - Stock changes on checkout must happen in a DB transaction (decrement, reject if insufficient).
 - Checkout hands off to Telegram via `https://t.me/rtnstores?text=<encoded message with payment ID>`.
 - Images live in `public/img/` (logo-512.png, hero.webp, account-*.webp, cape-*.webp) — use `next/image`. Product images must be site-relative paths (`/img/...`).
