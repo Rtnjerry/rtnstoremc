@@ -33,8 +33,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Nav />
             <main className="page">{children}</main>
             <footer className="footer">
-              <p>© {new Date().getFullYear()} RTNSTORE · Support on Telegram <a href="https://t.me/rtnstores">@rtnstores</a></p>
-              <p className="muted">This Website is Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+              <p>© {new Date().getFullYear()} RTNStore · Support on Telegram <a href="https://t.me/rtnstores">@rtnstores</a></p>
+              <p className="muted">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
             </footer>
             <SettingsSheet />
           </Providers>

@@ -148,7 +148,7 @@ export default function SettingsSheet() {
             </SignOutButton>
           </Show>
         </div>
-        <p className="sheet-foot">RTNSTORE · Not affiliated with Mojang or Microsoft</p>
+        <p className="sheet-foot">RTNStore · Not affiliated with Mojang or Microsoft</p>
       </div>
     </div>
   );

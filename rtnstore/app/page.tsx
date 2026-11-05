@@ -10,11 +10,11 @@ export default function Home() {
         <Image src="/img/hero.webp" alt="Blocky voxel landscape at golden hour" fill priority sizes="100vw" className="hero-img" />
         <div className="hero-shade" />
         <div className="hero-content">
-          <span className="eyebrow">Welcome to RTNSTORE</span>
+          <span className="eyebrow">Welcome to RTNStore</span>
           <h1>
-            Your Next Adventure,
+            Your next adventure,
             <br />
-            One Block Away.
+            one block away.
           </h1>
           <p>Premium Minecraft accounts and exclusive capes. Instant checkout, live stock, real humans on Telegram.</p>
           <div className="hero-cta">
